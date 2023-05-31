@@ -1,0 +1,49 @@
+To install Kubernetes on Ubuntu, you can follow these steps:
+
+1. Update System Packages:
+
+$sudo apt update
+
+2. Disable Swap:
+
+$sudo swapoff -a
+
+3. Install Docker:
+
+$sudo apt install docker.io
+
+4. Enable Docker Service:
+
+$sudo systemctl enable docker
+
+5. Install Kubernetes Components:
+
+$sudo apt install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+sudo apt install -y kubelet kubeadm kubectl
+
+6. Configure Kubernetes:
+
+$sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+Take note of the kubeadm join command that is displayed at the end of the output. You will need it to join worker nodes to the cluster.
+
+6. Set Up Cluster for Non-Root User:
+
+$mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+7. Install a Pod Network:
+
+$sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+8. Verify Installation:
+
+$kubectl get pods --all-namespaces
+
+This command should display the running pods in the cluster.
+
+That's it! You have successfully installed Kubernetes on Ubuntu.
