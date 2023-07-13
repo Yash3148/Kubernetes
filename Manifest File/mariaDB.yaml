@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mariadb
+  name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - image: mariadb
+        name: mariadb
+        envFrom:
+        - secretRef:
+            name: mariadb-secret
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "500Mi"
+          limits:
+            cpu: "0.5"
+            memory: "500Mi"
+        readinessProbe:
+          tcpSocket:
+            port: 3306
+status: {}
