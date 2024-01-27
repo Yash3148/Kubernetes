@@ -1,5 +1,7 @@
 To install Kubernetes on Ubuntu, you can follow these steps:
 
+Documentation for Minikube ---> https://www.linuxbuzz.com/install-minikube-on-ubuntu/
+
 1. Update System Packages:
 
 $sudo apt update
